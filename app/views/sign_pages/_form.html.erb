@@ -1,0 +1,21 @@
+<%= form_for(@sign_page) do |f| %>
+  <% if @sign_page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sign_page.errors.count, "error") %> prohibited this sign_page from being saved:</h2>
+
+      <ul>
+      <% @sign_page.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
