@@ -10,7 +10,7 @@
   });
 </script>
 
-<%= form_for(@sign_page), :html => { :class => 'signature_form'} do |f| %>
+<%= form_for(@sign_page, html: { class: 'signature_form'}) do |f| %>
 
   <% if @sign_page.errors.any? %>
     <div id="error_explanation">
@@ -27,12 +27,16 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
+  <div class="field">
+    <%= f.label :signature %><br>
+    <%= f.hidden_field :signature, value: :nil, class: :output %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
 
-- form_for @signature, :html => { :class => 'signature_form' } do |form|
+<!-- - form_for @signature, :html => { :class => 'signature_form' } do |form|
   %dl
     %dt
       = form.label :name
@@ -40,7 +44,7 @@
       = form.text_field :name
     %dt
       = form.label :signature
-    %dd
+    %dd -->
       .sig.sigWrapper{:style => "width: #{Signature::WIDTH}px; height: #{Signature::HEIGHT}px;"}
         %canvas.pad{:width => Signature::WIDTH, :height => Signature::HEIGHT}
         = form.hidden_field :signature, :value => nil, :class => 'output'
