@@ -10,41 +10,22 @@
   });
 </script>
 
-<%= form_for(@sign_page, html: { class: 'signature_form'}) do |f| %>
-
-  <% if @sign_page.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@sign_page.errors.count, "error") %> prohibited this sign_page from being saved:</h2>
-
-      <ul>
-      <% @sign_page.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :signature %><br>
-    <%= f.hidden_field :signature, value: :nil, class: :output %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<% form_for @sign_page, :html => { :class => 'signature_form' } do |form| %>
+  <dl>
+    <dt>
+      <%= form.label :name %>
+    </dt>
+    <dd>
+      <%= form.text_field :name %>
+    </dd>
+    <dt>
+      <%= form.label :signature %>
+    </dt>
+    <dd>
+      <div class="sig sigWrapper" style="width: <%= SignPage::WIDTH %>px; height: <%= SignPage::HEIGHT %>px;">
+        <canvas class="pad" height="<%= SignPage::HEIGHT %>" width="<%= SignPage::WIDTH %>"></canvas>
+        <%= form.hidden_field :signature, :value => nil, :class => 'output' %>
+      </div>
+    </dd>
+  </dl>
 <% end %>
-
-<!-- - form_for @signature, :html => { :class => 'signature_form' } do |form|
-  %dl
-    %dt
-      = form.label :name
-    %dd
-      = form.text_field :name
-    %dt
-      = form.label :signature
-    %dd -->
-      .sig.sigWrapper{:style => "width: #{Signature::WIDTH}px; height: #{Signature::HEIGHT}px;"}
-        %canvas.pad{:width => Signature::WIDTH, :height => Signature::HEIGHT}
-        = form.hidden_field :signature, :value => nil, :class => 'output'
