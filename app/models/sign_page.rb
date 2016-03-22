@@ -6,6 +6,11 @@ class SignPage < ActiveRecord::Base
   HEIGHT = 160
   WIDTH = 480
 
+  def signature_present
+    if signature.size <= 2
+      errors.add(:signature, :blank)
+    end
+  end
 
   def generate_image
     instructions = JSON.parse(signature).map { |h| "line #{h['mx'].to_i},#{h['my'].to_i} #{h['lx'].to_i},#{h['ly'].to_i}" } * ' '
