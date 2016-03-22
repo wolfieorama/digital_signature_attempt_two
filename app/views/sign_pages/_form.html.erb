@@ -1,3 +1,15 @@
+<script>
+$(function() {
+    $('.signature_form')
+    .signaturePad({
+      drawOnly: true,
+      validateFields: false,
+      lineTop: #{Signature::HEIGHT - 30}
+    })
+    .regenerate(#{JSON.parse(@signature.signature || "[]").to_json});
+  });
+</script>
+
 <%= form_for @sign_page, :html => { :class => 'signature_form' } do |f| %>
   <% if @sign_page.errors.any? %>
     <div id="error_explanation">
