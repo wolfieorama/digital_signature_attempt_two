@@ -1,31 +1,29 @@
-<script>
-  $(function() {
-    $('.signature_form')
-    .signaturePad({
-      drawOnly: true,
-      validateFields: false,
-      lineTop: #{Signature::HEIGHT - 30}
-    })
-    .regenerate(#{JSON.parse(@signature.signature || "[]").to_json});
-  });
-</script>
+<%= form_for @sign_page, :html => { :class => 'signature_form' } do |f| %>
+  <% if @sign_page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sign_page.errors.count, "error") %> prohibited this sign_page from being saved:</h2>
 
-<% form_for @sign_page, :html => { :class => 'signature_form' } do |form| %>
-  <dl>
-    <dt>
-      <%= form.label :name %>
-    </dt>
-    <dd>
-      <%= form.text_field :name %>
-    </dd>
-    <dt>
-      <%= form.label :signature %>
-    </dt>
-    <dd>
-      <div class="sig sigWrapper" style="width: <%= SignPage::WIDTH %>px; height: <%= SignPage::HEIGHT %>px;">
-        <canvas class="pad" height="<%= SignPage::HEIGHT %>" width="<%= SignPage::WIDTH %>"></canvas>
-        <%= form.hidden_field :signature, :value => nil, :class => 'output' %>
-      </div>
-    </dd>
-  </dl>
+      <ul>
+      <% @sign_page.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :signature %><br>
+    <div class="sig sigWrapper" style="width: <%= SignPage::WIDTH %>px; height: <%= SignPage::HEIGHT %>px;">
+      <canvas class="pad" height="<%= SignPage::HEIGHT %>" width="<%= SignPage::WIDTH %>"></canvas>
+      <%= f.hidden_field :signature, :value => nil, :class => 'output' %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
 <% end %>
